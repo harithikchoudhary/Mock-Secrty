@@ -11,7 +11,7 @@ public class MySecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-                http    .authorizeRequests()
+                http.authorizeRequests()
                 .antMatchers("/mock","/mock/issue-book").permitAll()
                 .antMatchers("/mock/**").authenticated()
                 .and()
@@ -20,6 +20,13 @@ public class MySecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        auth.InMemoryAuthentication().
+            withUser("admin").
+            password(passwordEncoder().encode("adminpass")).roles("ADMIN)
+            .and()
+            .withUser("user").
+            password(passwordEncoder().encode("userpass")).roles("USER);
 
     }
 }
